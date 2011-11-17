@@ -122,9 +122,6 @@
          when there's no network connection. If the scan doesn't timeout, use zero -->
     <integer name="config_radioScanningTimeout">0</integer>
 
-    <!-- Support for newer htc librils --> 
-    <bool name="config_newHtcLibRil">false</bool>
-
     <!-- XXXXX NOTE THE FOLLOWING RESOURCES USE THE WRONG NAMING CONVENTION.
          Please don't copy them, copy anything else. -->
 
