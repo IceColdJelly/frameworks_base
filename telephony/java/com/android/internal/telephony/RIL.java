@@ -701,9 +701,13 @@ public class RIL extends BaseCommands implements CommandsInterface {
 
         if (RILJ_LOGD) riljLog(rr.serialString() + "> " + requestToString(rr.mRequest));
 
-        rr.mp.writeInt(2);
+        boolean oldRil = needsOldRilFeature("facilitylock");
+
+        rr.mp.writeInt(oldRil ? 1 : 2);
         rr.mp.writeString(pin);
-        rr.mp.writeString(aid);
+
+        if (!oldRil)
+            rr.mp.writeString(aid);
 
         send(rr);
     }
@@ -721,10 +725,14 @@ public class RIL extends BaseCommands implements CommandsInterface {
 
         if (RILJ_LOGD) riljLog(rr.serialString() + "> " + requestToString(rr.mRequest));
 
-        rr.mp.writeInt(3);
+        boolean oldRil = needsOldRilFeature("facilitylock");
+
+        rr.mp.writeInt(oldRil ? 2 : 3);
         rr.mp.writeString(puk);
         rr.mp.writeString(newPin);
-        rr.mp.writeString(aid);
+
+        if (!oldRil)
+            rr.mp.writeString(aid);
 
         send(rr);
     }
@@ -742,9 +750,13 @@ public class RIL extends BaseCommands implements CommandsInterface {
 
         if (RILJ_LOGD) riljLog(rr.serialString() + "> " + requestToString(rr.mRequest));
 
-        rr.mp.writeInt(2);
+        boolean oldRil = needsOldRilFeature("facilitylock");
+
+        rr.mp.writeInt(oldRil ? 1 : 2);
         rr.mp.writeString(pin);
-        rr.mp.writeString(aid);
+
+        if (!oldRil)
+            rr.mp.writeString(aid);
 
         send(rr);
     }
@@ -762,10 +774,14 @@ public class RIL extends BaseCommands implements CommandsInterface {
 
         if (RILJ_LOGD) riljLog(rr.serialString() + "> " + requestToString(rr.mRequest));
 
-        rr.mp.writeInt(3);
+        boolean oldRil = needsOldRilFeature("facilitylock");
+
+        rr.mp.writeInt(oldRil ? 2 : 3);
         rr.mp.writeString(puk);
         rr.mp.writeString(newPin2);
-        rr.mp.writeString(aid);
+
+        if (!oldRil)
+            rr.mp.writeString(aid);
 
         send(rr);
     }
@@ -783,10 +799,14 @@ public class RIL extends BaseCommands implements CommandsInterface {
 
         if (RILJ_LOGD) riljLog(rr.serialString() + "> " + requestToString(rr.mRequest));
 
-        rr.mp.writeInt(3);
+        boolean oldRil = needsOldRilFeature("facilitylock");
+
+        rr.mp.writeInt(oldRil ? 2 : 3);
         rr.mp.writeString(oldPin);
         rr.mp.writeString(newPin);
-        rr.mp.writeString(aid);
+
+        if (!oldRil)
+            rr.mp.writeString(aid);
 
         send(rr);
     }
@@ -804,10 +824,14 @@ public class RIL extends BaseCommands implements CommandsInterface {
 
         if (RILJ_LOGD) riljLog(rr.serialString() + "> " + requestToString(rr.mRequest));
 
-        rr.mp.writeInt(3);
+        boolean oldRil = needsOldRilFeature("facilitylock");
+
+        rr.mp.writeInt(oldRil ? 2 : 3);
         rr.mp.writeString(oldPin2);
         rr.mp.writeString(newPin2);
-        rr.mp.writeString(aid);
+
+        if (!oldRil)
+            rr.mp.writeString(aid);
 
         send(rr);
     }
@@ -1663,14 +1687,18 @@ public class RIL extends BaseCommands implements CommandsInterface {
 
         if (RILJ_LOGD) riljLog(rr.serialString() + "> " + requestToString(rr.mRequest));
 
+        boolean oldRil = needsOldRilFeature("facilitylock");
+
         // count strings
-        rr.mp.writeInt(4);
+        rr.mp.writeInt(oldRil ? 3 : 4);
 
         rr.mp.writeString(facility);
         rr.mp.writeString(password);
 
         rr.mp.writeString(Integer.toString(serviceClass));
-        rr.mp.writeString(appId);
+
+        if (!oldRil)
+            rr.mp.writeString(appId);
 
         send(rr);
     }
@@ -1692,15 +1720,19 @@ public class RIL extends BaseCommands implements CommandsInterface {
 
         if (RILJ_LOGD) riljLog(rr.serialString() + "> " + requestToString(rr.mRequest));
 
+        boolean oldRil = needsOldRilFeature("facilitylock");
+
         // count strings
-        rr.mp.writeInt(5);
+        rr.mp.writeInt(oldRil ? 4 : 5);
 
         rr.mp.writeString(facility);
         lockString = (lockState)?"1":"0";
         rr.mp.writeString(lockString);
         rr.mp.writeString(password);
         rr.mp.writeString(Integer.toString(serviceClass));
-        rr.mp.writeString(appId);
+
+        if (!oldRil)
+            rr.mp.writeString(appId);
 
         send(rr);
 
@@ -3128,6 +3160,7 @@ public class RIL extends BaseCommands implements CommandsInterface {
             dataCall.cid = p.readInt();
             dataCall.active = p.readInt();
             dataCall.type = p.readString();
+            p.readString(); // APN - not used
             String addresses = p.readString();
             if (!TextUtils.isEmpty(addresses)) {
                 dataCall.addresses = addresses.split(" ");
