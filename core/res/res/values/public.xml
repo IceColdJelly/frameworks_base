@@ -3659,5 +3659,7 @@
   <public type="style" name="Widget.DeviceDefault.Light.MediaRouteButton" id="0x010301d8" />
 
   <java-symbol type="bool" name="config_autoBrightnessButtonKeyboard" />
+  <java-symbol type="string" name="config_deviceKeyHandlerLib" />
+  <java-symbol type="string" name="config_deviceKeyHandlerClass" />
 
 </resources>
