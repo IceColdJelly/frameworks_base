@@ -229,6 +229,7 @@ public final class RIL extends BaseCommands implements CommandsInterface {
     // mRequestList.size() unless there are requests no replied while
     // WAKE_LOCK_TIMEOUT occurs.
     int mRequestMessagesWaiting;
+    boolean mNewHtcLibRil;
 
     //I'd rather this be LinkedList or something
     ArrayList<RILRequest> mRequestsList = new ArrayList<RILRequest>();
@@ -631,6 +632,9 @@ public final class RIL extends BaseCommands implements CommandsInterface {
 
         Looper looper = mSenderThread.getLooper();
         mSender = new RILSender(looper);
+
+        mNewHtcLibRil = context.getResources().getBoolean(
+                com.android.internal.R.bool.config_newHtcLibRil);
 
         ConnectivityManager cm = (ConnectivityManager)context.getSystemService(
                 Context.CONNECTIVITY_SERVICE);
@@ -3218,15 +3222,19 @@ public final class RIL extends BaseCommands implements CommandsInterface {
         String strings[] = (String [])responseStrings(p);
         ArrayList<OperatorInfo> ret;
 
-        if (strings.length % 4 != 0) {
+        int numOperatorInfoFields = 4;
+        if (mNewHtcLibRil) {
+            numOperatorInfoFields = 5;
+        }
+        if (strings.length % numOperatorInfoFields != 0) {
             throw new RuntimeException(
                 "RIL_REQUEST_QUERY_AVAILABLE_NETWORKS: invalid response. Got "
-                + strings.length + " strings, expected multible of 4");
+                + strings.length + " strings, expected multible of "+numOperatorInfoFields);
         }
 
-        ret = new ArrayList<OperatorInfo>(strings.length / 4);
+        ret = new ArrayList<OperatorInfo>(strings.length / numOperatorInfoFields);
 
-        for (int i = 0 ; i < strings.length ; i += 4) {
+        for (int i = 0 ; i < strings.length ; i += numOperatorInfoFields) {
             ret.add (
                 new OperatorInfo(
                     strings[i+0],
