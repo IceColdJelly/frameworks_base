@@ -65,7 +65,7 @@ public class BatteryController extends LinearLayout {
     public static final int STYLE_TEXT_ONLY = 1;
     public static final int STYLE_ICON_TEXT = 2;
     public static final int STYLE_ICON_CENTERED_TEXT = 3;
-    public static final int STYLE_ICON_CIRCLE = 4;
+    public static final int STYLE_ICON_CIRCLEMOD = 4;
     public static final int STYLE_ICON_CIRCLE = 5;
     public static final int STYLE_ICON_CIRCLE_PERCENT = 6;
     public static final int STYLE_ICON_HONEY = 7;
@@ -283,14 +283,12 @@ public class BatteryController extends LinearLayout {
                 mBatteryText.setVisibility(View.GONE);
                 mBatteryCenterText.setVisibility(View.GONE);
                 mBatteryIcon.setVisibility(View.VISIBLE);
-                mBatteryTextOnly.setVisibility(View.GONE);
                 setVisibility(View.VISIBLE);
                 break;
             case STYLE_ICON_BAR:
                 mBatteryText.setVisibility(View.GONE);
                 mBatteryCenterText.setVisibility(View.GONE);
                 mBatteryIcon.setVisibility(View.VISIBLE);
-                mBatteryTextOnly.setVisibility(View.GONE);
                 setVisibility(View.VISIBLE);
                 break;
             default:
