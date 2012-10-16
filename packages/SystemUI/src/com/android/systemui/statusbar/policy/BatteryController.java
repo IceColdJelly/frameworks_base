@@ -66,9 +66,11 @@ public class BatteryController extends LinearLayout {
     public static final int STYLE_ICON_TEXT = 2;
     public static final int STYLE_ICON_CENTERED_TEXT = 3;
     public static final int STYLE_ICON_CIRCLE = 4;
-    public static final int STYLE_ICON_HONEY = 5;
-    public static final int STYLE_ICON_BAR = 6;
-    public static final int STYLE_HIDE = 7;
+    public static final int STYLE_ICON_CIRCLE = 5;
+    public static final int STYLE_ICON_CIRCLE_PERCENT = 6;
+    public static final int STYLE_ICON_HONEY = 7;
+    public static final int STYLE_ICON_BAR = 8;
+    public static final int STYLE_HIDE = 9;
 
     public BatteryController(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -131,9 +133,11 @@ public class BatteryController extends LinearLayout {
         mBatteryStyle = Settings.System.getInt(cr,
                 Settings.System.STATUSBAR_BATTERY_ICON, 0);
         int icon;
-        if (mBatteryStyle == STYLE_ICON_CIRCLE) {
+        if (mBatteryStyle == STYLE_ICON_CIRCLEMOD) {
             icon = plugged ? R.drawable.stat_sys_battery_charge_circle
                     : R.drawable.stat_sys_battery_circle;
+        } else if (mBatteryStyle == STYLE_ICON_CIRCLE || mBatteryStyle == STYLE_ICON_CIRCLE_PERCENT) {
+            icon = 0;
         } else if (mBatteryStyle == STYLE_ICON_HONEY) {
             icon = plugged ? R.drawable.stat_sys_battery_charge_honey
                     : R.drawable.stat_sys_battery_honey;
@@ -257,7 +261,19 @@ public class BatteryController extends LinearLayout {
                 mBatteryIcon.setVisibility(View.GONE);
                 setVisibility(View.GONE);
                 break;
+            case STYLE_ICON_CIRCLEMOD:
+                mBatteryText.setVisibility(View.GONE);
+                mBatteryCenterText.setVisibility(View.GONE);
+                mBatteryIcon.setVisibility(View.VISIBLE);
+                setVisibility(View.VISIBLE);
+                break;
             case STYLE_ICON_CIRCLE:
+                mBatteryText.setVisibility(View.GONE);
+                mBatteryCenterText.setVisibility(View.GONE);
+                mBatteryIcon.setVisibility(View.VISIBLE);
+                setVisibility(View.VISIBLE);
+                break;
+            case STYLE_ICON_CIRCLE_PERCENT:
                 mBatteryText.setVisibility(View.GONE);
                 mBatteryCenterText.setVisibility(View.GONE);
                 mBatteryIcon.setVisibility(View.VISIBLE);
