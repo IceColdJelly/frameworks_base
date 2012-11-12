@@ -3750,11 +3750,9 @@
   <java-symbol type="bool" name="config_autoBrightnessButtonKeyboard" />
   <java-symbol type="string" name="config_deviceKeyHandlerLib" />
   <java-symbol type="string" name="config_deviceKeyHandlerClass" />
-  <java-symbol type="integer" name="config_deviceHardwareKeys" />
   <java-symbol type="bool" name="config_noDelayInATwoDP" />
   <java-symbol type="bool" name="config_smsSamsungCdmaAlternateMessageIDEncoding" />
   <java-symbol type="bool" name="config_samsung_stk" />
-
   <java-symbol type="bool" name="config_isTegra3" />
 
 <!-- AVRCP 1.3 Meta Data Resources -->
